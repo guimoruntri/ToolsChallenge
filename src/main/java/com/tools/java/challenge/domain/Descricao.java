@@ -3,6 +3,8 @@ package com.tools.java.challenge.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tools.java.challenge.enums.Status;
 
 public class Descricao implements Serializable{
@@ -10,22 +12,26 @@ public class Descricao implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Double valor;
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private Date dataHora;
 	private String estabelecimeto;
 	private Integer nsu;
 	private Integer codigoAutorizacao;
-	private Status status;
+	private Integer status;
+	@JsonIgnore
+	private Transacao transacao;
 	
 	public Descricao() {}
 	
 	public Descricao(Double valor, Date dataHora, String estabelecimeto, Integer nsu, Integer codigoAutorizacao,
-			Status status) {
+			Status status, Transacao transacao) {
 		this.valor = valor;
 		this.dataHora = dataHora;
 		this.estabelecimeto = estabelecimeto;
 		this.nsu = nsu;
 		this.codigoAutorizacao = codigoAutorizacao;
-		this.status = status;
+		this.status = status.getCod();
+		this.transacao = transacao;
 	}
 	public Double getValor() {
 		return valor;
@@ -58,10 +64,18 @@ public class Descricao implements Serializable{
 		this.codigoAutorizacao = codigoAutorizacao;
 	}
 	public Status getStatus() {
-		return status;
+		return Status.toEnum(status) ;
 	}
 	public void setStatus(Status status) {
-		this.status = status;
+		this.status = status.getCod();
+	}
+
+	public Transacao getTransacao() {
+		return transacao;
+	}
+
+	public void setTransacao(Transacao transacao) {
+		this.transacao = transacao;
 	}
 	
 }

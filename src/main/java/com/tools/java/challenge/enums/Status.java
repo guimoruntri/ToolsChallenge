@@ -2,9 +2,8 @@ package com.tools.java.challenge.enums;
 
 public enum Status {
 
-	PENDENTE(1,"Pagamento Pendente"),
-	QUITADO(2, "Pagamento Quitado"),
-	CANCELADO(3,"Pagamento Cancelado");
+	AUTORIZADO(1,"AUTORIZADO"),
+	NEGADO(2, "NEGADO");
 
 	private int cod;
 	private String status;
@@ -30,7 +29,7 @@ public enum Status {
 		this.status = status;
 	}
 	
-	public Status toEnum(Integer cod) {
+	public static Status toEnum(Integer cod) {
 		if(cod==null) {
 			return null;
 		}

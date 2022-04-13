@@ -1,6 +1,7 @@
 package com.tools.java.challenge.domain;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,19 +15,22 @@ public class Transacao implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private static Integer CONTADOR=1;
 	private Integer id;
 	private Long numeroCartao;
 	private Descricao descricao;
-	private FormaPagamento formaPagamento;
+	private Integer formaPagamento;
 	
 	public Transacao() {}
 	
 	public Transacao(Integer id, Long numeroCartao, Descricao descricao, FormaPagamento formaPagamento) {
-		super();
-		this.id = id;
+		this.id = count(id);
 		this.numeroCartao = numeroCartao;
 		this.descricao = descricao;
-		this.formaPagamento = formaPagamento;
+		this.formaPagamento = formaPagamento.getCod();
+	}
+	public Integer count(Integer id) {
+		return CONTADOR++;
 	}
 
 	public Integer getId() {
@@ -34,7 +38,7 @@ public class Transacao implements Serializable{
 	}
 
 	public void setId(Integer id) {
-		this.id = id;
+		this.id = count(id);
 	}
 
 	public Long getNumeroCartao() {
@@ -54,11 +58,43 @@ public class Transacao implements Serializable{
 	}
 
 	public FormaPagamento getFormaPagamento() {
-		return formaPagamento;
+		return FormaPagamento.toEnum(formaPagamento);
 	}
 
 	public void setFormaPagamento(FormaPagamento formaPagamento) {
-		this.formaPagamento = formaPagamento;
+		this.formaPagamento = formaPagamento.getCod();
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Transacao other = (Transacao) obj;
+		return Objects.equals(id, other.id);
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Transacao [id=");
+		builder.append(id);
+		builder.append(", numeroCartao=");
+		builder.append(numeroCartao);
+		builder.append(", descricao=");
+		builder.append(descricao);
+		builder.append(", formaPagamento=");
+		builder.append(formaPagamento);
+		builder.append("]");
+		return builder.toString();
 	}
 	
 	

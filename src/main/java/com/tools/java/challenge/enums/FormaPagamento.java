@@ -2,9 +2,9 @@ package com.tools.java.challenge.enums;
 
 public enum FormaPagamento {
 
-	PENDENTE(1,"Pagamento Pendente"),
-	QUITADO(2, "Pagamento Quitado"),
-	CANCELADO(3,"Pagamento Cancelado");
+	AVISTA(1,"A VISTA"),
+	PARCELADOLOJA(2, "PARCELADO LOJA"),
+	PARCELADOEMISSOR(3,"PARCELADO EMISSOR");
 
 	private int cod;
 	private String status;
@@ -30,7 +30,7 @@ public enum FormaPagamento {
 		this.status = status;
 	}
 	
-	public FormaPagamento toEnum(Integer cod) {
+	public static FormaPagamento toEnum(Integer cod) {
 		if(cod==null) {
 			return null;
 		}
