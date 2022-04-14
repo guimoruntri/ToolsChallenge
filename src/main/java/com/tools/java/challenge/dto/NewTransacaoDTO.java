@@ -1,4 +1,4 @@
-package com.tools.java.challenge.domain;
+package com.tools.java.challenge.dto;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -7,7 +7,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-public class Transacao implements Serializable{
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.tools.java.challenge.domain.FormaDePagamento;
+
+public class NewTransacaoDTO implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -16,12 +19,14 @@ public class Transacao implements Serializable{
 	private static Integer CONTADOR=1;
 	private Integer id;
 	private Long numeroCartao;
-	private Descricao descricao;
+	@JsonProperty("descricao")
+	private NewDescricaoDTO descricao;
+	@JsonProperty("formaPagamento")
 	private FormaDePagamento formaDePagamento;
 	
-	public Transacao() {}
+	public NewTransacaoDTO() {}
 	
-	public Transacao(Integer id, Long numeroCartao, Descricao descricao, FormaDePagamento formaDePagamento) {
+	public NewTransacaoDTO(Integer id, Long numeroCartao, NewDescricaoDTO descricao, FormaDePagamento formaDePagamento) {
 		this.id = count(id);
 		this.numeroCartao = numeroCartao;
 		this.descricao = descricao;
@@ -47,11 +52,11 @@ public class Transacao implements Serializable{
 		this.numeroCartao = numeroCartao;
 	}
 
-	public Descricao getDescricao() {
+	public NewDescricaoDTO getNewDescricaoDTO() {
 		return descricao;
 	}
 
-	public void setDescricao(Descricao descricao) {
+	public void setNewDescricaoDTO(NewDescricaoDTO descricao) {
 		this.descricao = descricao;
 	}
 
@@ -76,14 +81,14 @@ public class Transacao implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Transacao other = (Transacao) obj;
+		NewTransacaoDTO other = (NewTransacaoDTO) obj;
 		return Objects.equals(id, other.id);
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Transacao [id=");
+		builder.append("NewTransacaoDTO [id=");
 		builder.append(id);
 		builder.append(", numeroCartao=");
 		builder.append(numeroCartao);
