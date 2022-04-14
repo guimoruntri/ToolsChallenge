@@ -43,7 +43,7 @@ public class ToolsJavaChallengeApplication implements CommandLineRunner{
 		
 		tr2.setDescricao(desc2);
 		
-		pagamentoService.setTransacoes(Arrays.asList(tr1,tr2));
+//		pagamentoService.setTransacoes(Arrays.asList(tr1,tr2));
 		
 	}
 

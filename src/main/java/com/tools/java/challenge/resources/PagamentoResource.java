@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tools.java.challenge.domain.Transacao;
-import com.tools.java.challenge.dto.NewTransacaoDTO;
 import com.tools.java.challenge.services.PagamentoService;
 
 @RestController
