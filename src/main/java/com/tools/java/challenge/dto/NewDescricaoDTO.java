@@ -3,15 +3,21 @@ package com.tools.java.challenge.dto;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 public class NewDescricaoDTO  implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	
+
+	@NotNull(message = "O campo deve ser preenchido")
 	private Double valor;
+	
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+	@NotNull(message = "O campo deve ser preenchido")
 	private Date dataHora;
+	@NotEmpty(message = "O campo deve ser preenchido")
 	private String estabelecimeto;
 	
 	public NewDescricaoDTO() {}

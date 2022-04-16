@@ -3,13 +3,18 @@ package com.tools.java.challenge.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tools.java.challenge.enums.Status;
 
 public class Descricao implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	
+	@NotNull
+	@Length(min = 5, max = 80, message = "O tamanho deve ser entre 5 e 80")
 	private Double valor;
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private Date dataHora;

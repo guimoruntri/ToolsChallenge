@@ -2,6 +2,8 @@ package com.tools.java.challenge.dto;
 
 import java.io.Serializable;
 
+import javax.validation.Valid;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class NewPagamentosDTO implements Serializable{
@@ -14,6 +16,7 @@ public class NewPagamentosDTO implements Serializable{
 	public NewPagamentosDTO(NewTransacaoDTO transacao) {
 		this.transacao = transacao;
 	}
+	@Valid
 	public NewTransacaoDTO getNewTransacaoDTO() {
 		return transacao;
 	}

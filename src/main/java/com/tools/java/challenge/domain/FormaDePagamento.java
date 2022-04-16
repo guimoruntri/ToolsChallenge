@@ -2,12 +2,16 @@ package com.tools.java.challenge.domain;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotNull;
+
 import com.tools.java.challenge.enums.FormaPagamento;
 
 public class FormaDePagamento implements Serializable{
 
 	private static final long serialVersionUID = 1L;
+	@NotNull(message = "O campo deve ser preenchido")
 	private Integer formaPagamento;
+	@NotNull(message = "O campo deve ser preenchido")
 	private Integer parcelas;
 	
 	public FormaDePagamento() {}

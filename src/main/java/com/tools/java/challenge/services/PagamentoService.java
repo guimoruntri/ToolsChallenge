@@ -2,8 +2,8 @@ package com.tools.java.challenge.services;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.stereotype.Service;
 
@@ -13,6 +13,7 @@ import com.tools.java.challenge.domain.Pagamentos;
 import com.tools.java.challenge.domain.Transacao;
 import com.tools.java.challenge.dto.NewPagamentosDTO;
 import com.tools.java.challenge.enums.Status;
+import com.tools.java.challenge.exception.IllegalFormatException;
 import com.tools.java.challenge.exception.NullPointerException;
 import com.tools.java.challenge.exception.ObjectNotFoundException;
 @Service
@@ -21,8 +22,7 @@ public class PagamentoService implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	private List<Pagamentos>    pagamentos = new ArrayList<Pagamentos>();
-	private List<Pagamentos> newPagamentos = new ArrayList<Pagamentos>();
-
+	
 	public Pagamentos find(Integer id) {
 		if(pagamentos.size() != 0) {
 			for(Pagamentos tr : pagamentos) {
@@ -44,9 +44,15 @@ public class PagamentoService implements Serializable{
 	}
 
 	public Pagamentos insert(Pagamentos obj) {
-		setNewPagamentos(Arrays.asList(obj));
-		setNewPagamentos(pagamentos);
-//		pagamentos.add(obj);
+		
+		for(Pagamentos x: pagamentos) {
+			
+			if(x.getTransacao().getId().equals(obj.getTransacao().getId())) {
+				throw new IllegalFormatException ("O id: " + obj.getTransacao().getId() + " já foi utilizado,"
+						+ " por favor insirá um novo id.");
+			}
+		}
+		pagamentos.add(obj);
 		return obj;
 	}
 	
@@ -58,20 +64,21 @@ public class PagamentoService implements Serializable{
 	}
 
 	public List<Pagamentos> getNewPagamentos() {
-		return newPagamentos;
+		return pagamentos;
 	}
 
-	public void setNewPagamentos(List<Pagamentos> newPagamentos) {
-		this.newPagamentos = newPagamentos;
+	public void setNewPagamentos(List<Pagamentos> pagamentos) {
+		this.pagamentos = pagamentos;
 	}
 
 	public Pagamentos fromDto(NewPagamentosDTO obj) {
+		Random rnd = new Random();
 		Transacao tr   = new Transacao(obj.getNewTransacaoDTO().getId(),obj.getNewTransacaoDTO().getNumeroCartao(),null,obj.getNewTransacaoDTO().getFormaPagamento());
 		Descricao desc = new Descricao(obj.getNewTransacaoDTO().getNewDescricaoDTO().getValor(),
 									   obj.getNewTransacaoDTO().getNewDescricaoDTO().getDataHora(),
 									   obj.getNewTransacaoDTO().getNewDescricaoDTO().getEstabelecimeto(),
-									   null,
-									   null,
+									   rnd.nextInt(1000000),
+									   new Random().nextInt(1000000),
 									   Status.AUTORIZADO);
 		FormaDePagamento formaPagto = obj.getNewTransacaoDTO().getFormaPagamento();
 		tr.setDescricao(desc);

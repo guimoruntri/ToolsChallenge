@@ -3,9 +3,8 @@ package com.tools.java.challenge.dto;
 import java.io.Serializable;
 import java.util.Objects;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tools.java.challenge.domain.FormaDePagamento;
@@ -14,10 +13,9 @@ public class NewTransacaoDTO implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private static Integer CONTADOR=1;
+	@NotNull(message = "Por favor, digite o id")
 	private Integer id;
+	@NotNull(message = "Por favor, digite o número do cartão")
 	private Long numeroCartao;
 	@JsonProperty("descricao")
 	private NewDescricaoDTO descricao;
@@ -27,21 +25,17 @@ public class NewTransacaoDTO implements Serializable{
 	public NewTransacaoDTO() {}
 	
 	public NewTransacaoDTO(Integer id, Long numeroCartao, NewDescricaoDTO descricao, FormaDePagamento formaDePagamento) {
-		this.id = count(id);
+		this.id = id;
 		this.numeroCartao = numeroCartao;
 		this.descricao = descricao;
 		this.formaDePagamento = formaDePagamento;
 	}
-	public Integer count(Integer id) {
-		return CONTADOR++;
-	}
-
 	public Integer getId() {
 		return id;
 	}
 
 	public void setId(Integer id) {
-		this.id = count(id);
+		this.id = id;
 	}
 
 	public Long getNumeroCartao() {
@@ -51,7 +45,7 @@ public class NewTransacaoDTO implements Serializable{
 	public void setNumeroCartao(Long numeroCartao) {
 		this.numeroCartao = numeroCartao;
 	}
-
+	@Valid
 	public NewDescricaoDTO getNewDescricaoDTO() {
 		return descricao;
 	}
@@ -59,7 +53,7 @@ public class NewTransacaoDTO implements Serializable{
 	public void setNewDescricaoDTO(NewDescricaoDTO descricao) {
 		this.descricao = descricao;
 	}
-
+	@Valid
 	public FormaDePagamento getFormaPagamento() {
 		return formaDePagamento;
 	}

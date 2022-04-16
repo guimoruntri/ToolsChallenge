@@ -3,6 +3,8 @@ package com.tools.java.challenge.resources;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,7 +47,7 @@ public class PagamentoResource  implements Serializable{
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Pagamentos> insert(@RequestBody NewPagamentosDTO objDto){
+	public ResponseEntity<Pagamentos> insert(@RequestBody @Valid NewPagamentosDTO objDto){
 		Pagamentos pagto = pagamentoService.fromDto(objDto);
 		pagto = pagamentoService.insert(pagto);
 		return ResponseEntity.ok().body(pagto);
