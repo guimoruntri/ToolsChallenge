@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tools.java.challenge.domain.Pagamentos;
@@ -26,6 +27,15 @@ public class PagamentoResource  implements Serializable{
 	private PagamentoService pagamentoService;
 	
 	private static final long serialVersionUID = 1L;
+
+
+	@RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+	@ResponseBody
+	public ResponseEntity<Pagamentos> insert(@RequestBody @Valid NewPagamentosDTO objDto){
+		Pagamentos pagto = pagamentoService.fromDto(objDto);
+		pagto = pagamentoService.insert(pagto);
+		return ResponseEntity.ok().body(pagto);
+	}
 	
 	@RequestMapping(value = "consulta/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Pagamentos> find(@PathVariable Integer id){
@@ -44,13 +54,6 @@ public class PagamentoResource  implements Serializable{
 		Pagamentos tr = pagamentoService.find(id);
 		tr.getTransacao().getDescricao().setStatus(Status.NEGADO);
 		return ResponseEntity.ok().body(tr);
-	}
-
-	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Pagamentos> insert(@RequestBody @Valid NewPagamentosDTO objDto){
-		Pagamentos pagto = pagamentoService.fromDto(objDto);
-		pagto = pagamentoService.insert(pagto);
-		return ResponseEntity.ok().body(pagto);
 	}
 	
 }

@@ -6,11 +6,7 @@ import java.util.Objects;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.NotNull;
 
 public class Transacao implements Serializable{
 
@@ -19,11 +15,7 @@ public class Transacao implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@NotBlank(message = "O campo deve ser preenchido")
-	@NotEmpty(message = "Ob")
-	@Size(min = 5, message = "campo > 5")
-
-	@Length(min = 5)
+	@NotNull
 	private Long numeroCartao;
 	private Descricao descricao;
 	private FormaDePagamento formaDePagamento;
